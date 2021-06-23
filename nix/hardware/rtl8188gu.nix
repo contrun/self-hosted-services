@@ -1,7 +1,8 @@
 { stdenv, lib, fetchFromGitHub, kernel, bc }:
 
-
-let modDestDir = "$out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/wireless/realtek/rtl8188gu";
+let
+  modDestDir =
+    "$out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/wireless/realtek/rtl8188gu";
 
 in stdenv.mkDerivation rec {
   name = "r8188gu-${kernel.version}-${version}";
@@ -14,6 +15,8 @@ in stdenv.mkDerivation rec {
     rev = "0b2333f01a856b70f5686cd826e31a236c2a14a5";
     sha256 = "sha256-Xc7I1ioeXa0DXumR/m6sGGWc/C+OKbz2Vy4m5OCOvIM=";
   };
+
+  patches = [ ./rtl8188gu-5.12.patch ];
 
   hardeningDisable = [ "pic" ];
 
